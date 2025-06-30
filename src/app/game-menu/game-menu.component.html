@@ -1,0 +1,111 @@
+<div class="d-flex flex-column align-items-center justify-content-center col-12 mainHolder" [style.background-color]="dynamicBg">
+    
+        <div class="d-flex justify-content-center infoHolder col-5 mb-2" *ngIf="isGameActive == true">
+            <div class="col-6 d-flex justify-content-center align-items-center flex-column ">
+                <div class="timer-ring">
+                    <svg [attr.width]="radius * 2 + 10" [attr.height]="radius * 2 + 10">
+                        <circle
+                        class="bg"
+                        [attr.r]="radius"
+                        [attr.cx]="radius + 5"
+                        [attr.cy]="radius + 5"
+                        />
+                        <circle
+                        class="progress"
+                        [attr.r]="radius"
+                        [attr.cx]="radius + 5"
+                        [attr.cy]="radius + 5"
+                        [attr.stroke-dasharray]="circumference"
+                        [attr.stroke-dashoffset]="circleOffset"
+                        [attr.stroke]="strokeColor"
+                        />
+                    </svg>
+                    <div class="time-text info bebas-neue-regular">{{ time }}</div>
+                </div>
+            </div>
+            <div class="col-6 d-flex justify-content-center align-items-start flex-column">
+                <p class="info bebas-neue-regular m-0 p-0">Correct : {{points}} / {{optionsAttempted}}</p>
+            </div>
+        </div>
+        <div class="nameDiv col-5 d-flex justify-content-center align-items-center flex-column pt-4">
+            <div class="col-12 d-flex justify-content-center align-items-center fs-3">
+                <p class="question bebas-neue-regular">{{ question }}</p>
+            </div>
+            <p class="name bebas-neue-regular">{{ countryName }}</p>
+            
+        </div>
+    
+    <div id="optionsHolder" class="optionsDiv col-5 d-flex justify-content-center align-items-center flex-wrap">
+        <ng-container *ngIf="randomCategory == 'area' && isGameActive == true">
+            <div
+                class="col-6 p-2 optionHolder"
+                *ngFor="let answer of possibleAnswers; let i = index;"
+                
+            >
+                <div id="answer_{{answer.correct}}_{{i}}" class="option option1 d-flex justify-content-center align-items-center bebas-neue-regular" (click)="checkAnswer(answer.correct, i)">
+                    <p class="m-0 p-0 optionText">{{ answer.answer | shortNumber}} km²</p>
+                </div>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="randomCategory == 'population' && isGameActive == true">
+            <div
+                class="col-6 p-2 optionHolder"
+                *ngFor="let answer of possibleAnswers; let i = index;"
+                
+            >
+                <div id="answer_{{answer.correct}}_{{i}}" class="option option1 d-flex justify-content-center align-items-center bebas-neue-regular" (click)="checkAnswer(answer.correct, i)">
+                <p class="m-0 p-0 optionText">{{ answer.answer | shortNumber}}</p>
+                </div>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="randomCategory == 'flag' && isGameActive == true">
+            <div
+                class="col-6 p-2 optionHolder"
+                *ngFor="let answer of possibleAnswers; let i = index;"
+                
+            >
+                <div id="answer_{{answer.correct}}_{{i}}" class="option option1 d-flex justify-content-center align-items-center bebas-neue-regular" (click)="checkAnswer(answer.correct, i)">
+                    <img class="flagImg" src="{{answer.answer}}" alt="">
+                </div>      
+            </div>
+        </ng-container>
+        <ng-container *ngIf="(randomCategory == 'capital' || randomCategory == 'border' || randomCategory == 'region' || randomCategory == 'currency') && isGameActive == true">
+            <div
+                class="col-6 p-2 optionHolder"
+                *ngFor="let answer of possibleAnswers; let i = index;"
+                
+            >
+                <div id="answer_{{answer.correct}}_{{i}}" class="option option1 d-flex justify-content-center align-items-center bebas-neue-regular" (click)="checkAnswer(answer.correct, i)">
+                    <p class="m-0 p-0 optionText">{{ answer.answer}}</p>
+                </div>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="isGameActive == false">
+            <div class="col-6 p-2 optionHolder">
+                <div class="option option1 d-flex flex-column justify-content-center align-items-center bebas-neue-regular">
+                    <p class="m-0 p-0 optionText">Correct : {{points}} / {{optionsAttempted}}</p>
+                </div>
+            </div>
+             <div class="col-6 p-2 optionHolder">
+                <div class="option option1 d-flex justify-content-center align-items-center bebas-neue-regular">
+                    <p class="m-0 p-0 optionText">Score: {{score | number: "1.1-1"}}</p>
+                </div>
+            </div>
+             <div class="col-6 p-2 optionHolder">
+                <div class="option option1 d-flex justify-content-center align-items-center bebas-neue-regular" (click)="goBack()"  >
+                    <p class="m-0 p-0 optionText">Go Back</p>
+                </div>
+            </div>
+             <div class="col-6 p-2 optionHolder">
+                <div class="option option1 d-flex justify-content-center align-items-center bebas-neue-regular" (click)="startGame()">
+                    <p class="m-0 p-0 optionText">Play Again</p>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+    <div class="historyDiv col-5 d-flex justify-content-center align-items-center">
+
+    </div>
+
+
+</div>

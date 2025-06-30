@@ -1,0 +1,24 @@
+.startBtn {
+    background-color: limegreen;
+    color: white;
+    font-size: 48px;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 24px;
+    cursor: pointer;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    animation: startBtn 1s linear 3s infinite;
+    box-shadow: 0 0 15px 4px rgb(51, 224, 51);
+}
+.startBtn:hover { 
+    transform: scale(1.05);
+}
+@keyframes startBtn {
+    0% { box-shadow: 0 0 15px 4px rgb(51, 224, 51); background-color: limegreen; }
+    50% { box-shadow: 0 0 25px 8px rgb(51, 224, 51); background-color: rgb(63, 207, 63);}
+    100% { box-shadow: 0 0 15px 4px rgb(51, 224, 51); background-color: limegreen;}
+}
+.font {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}

@@ -1,0 +1,91 @@
+
+.infoHolder {
+    height: 15vh;
+    color: #333;
+    background-color: white;
+    padding: 16px;
+    border-radius: 10px;
+}
+.info {
+    font-size: 36px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+
+}
+.nameDiv {
+    height: 25vh;
+    background-color: white;
+    padding: 16px;
+    border-radius: 10px;
+}
+.optionsHolder {
+  height: 40vh;
+}
+.name {
+    font-size: 70px;
+    color: #333;
+}
+.bebas-neue-regular {
+  font-family: "Bebas Neue", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.optionHolder {
+  height: 150px;
+}
+.option {
+  color: #333;
+  height: 100%;
+  font-size: 32px;
+  text-align: center;
+  border-radius: 5px;
+  background-color: white;
+  cursor: pointer;
+}
+.mainHolder {
+  height: 100vh;
+  transition: background-color 0.5s ease-in-out;
+}
+#whiteBg {
+  background-color: white;
+  padding: 16px;
+  border-radius: 10px;
+}
+.timer-ring {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  svg {
+    position: absolute;
+    transform: rotate(-90deg);
+  }
+
+  .bg {
+    fill: none;
+    stroke: #e6e6e6;
+    stroke-width: 10;
+  }
+
+  .progress {
+    fill: none;
+    stroke-width: 10;
+    stroke-linecap: round;
+    transition: stroke 0.5s, stroke-dashoffset 1s linear;
+  }
+
+  .time-text {
+    position: relative;
+    font-weight: bold;
+    z-index: 1;
+    color: #333;
+  }
+}
+.flagImg {
+  border-radius: 10px;
+  height: 80%;
+  border: solid 1px #333;
+}
