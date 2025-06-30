@@ -15,7 +15,7 @@ import { UserService } from '../user.service';
   
 })
 export class GameMenuComponent {
-  time = 3
+  time = 60
   maxTime = 60
 
   radius = 40;
