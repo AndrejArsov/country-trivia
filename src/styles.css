@@ -148,27 +148,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   justify-content: center;
   align-items: center;
   width: 100vw;
-  height: 120px;
-}
-@media (max-width: 768px) {
-  .loader-wrapper-user-info {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100vw;
-  height: 140px;
-}
+  height: 80px;
 }
 
-/* Small screens */
-@media (max-width: 480px) {
-  .loader-wrapper-user-info {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100vw;
-  height: 160px;
-}
-}

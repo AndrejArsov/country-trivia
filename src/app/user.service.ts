@@ -22,10 +22,12 @@ import {
   where,
   writeBatch,
 } from "firebase/firestore";
+import { environment } from "../enviroments/enviroment";
 
+const apiKey = environment.apiKey
 // Initialize Firebase
 const firebaseConfig = {
-  apiKey: "AIzaSyDuGRux4dWqKV8r38gzW1Kp0gXWKqdmGzg",
+  apiKey: apiKey,
   authDomain: "country-trivia-ae5d2.firebaseapp.com",
   projectId: "country-trivia-ae5d2",
   storageBucket: "country-trivia-ae5d2.appspot.com",
