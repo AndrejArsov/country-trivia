@@ -1,0 +1,39 @@
+.bebas-neue-regular {
+  font-family: "Bebas Neue", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+.holder {
+    padding: 16px;
+    padding-bottom: 8px;
+    background-color: limegreen;
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
+    color: white;
+    height: 120px;
+}
+/* Medium screens */
+@media (max-width: 768px) {
+  .responsive-text {
+    font-size: 1.4rem;
+  }
+  .holder {
+    height: 140px;
+  }
+  .sidetextHolder {
+    font-size: 3rem;
+  }
+}
+
+/* Small screens */
+@media (max-width: 480px) {
+  .responsive-text {
+    font-size: 5rem;
+  }
+  .holder {
+    height: 160px;
+  }
+  .sidetextHolder {
+    font-size: 3rem;
+  }
+}

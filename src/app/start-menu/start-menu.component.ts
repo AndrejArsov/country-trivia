@@ -4,11 +4,12 @@ import { Router } from '@angular/router';
 import { UserService } from '../user.service';
 import { MatDialog } from '@angular/material/dialog';
 import { NameDialogComponent } from './name-dialog/name-dialog.component';
-import { FormsModule } from '@angular/forms';
+import { UserInfoComponent } from "./user-info/user-info.component";
 
 @Component({
   selector: 'app-start-menu',
-  imports: [],
+  standalone: true,
+  imports: [UserInfoComponent],
   templateUrl: './start-menu.component.html',
   styleUrls: ['./start-menu.component.css', '../../bootstrap.css'],
 })
@@ -17,11 +18,13 @@ export class StartMenuComponent {
   loading = true;
   userProfile: any = null;
 
+  name: any;
+
   constructor(
     private userService: UserService,
     private dialog: MatDialog
   ) {}
-
+  
   async ngOnInit() {
     // Wait a bit to let auth state initialize
     setTimeout(async () => {
@@ -32,9 +35,10 @@ export class StartMenuComponent {
         this.userProfile = profile;
         this.loading = false;
       } else {
+        this.loading = false;
         // Show the name entry dialog
         const dialogRef = this.dialog.open(NameDialogComponent, {
-          width: '300px',
+          width: '600px',
           disableClose: true
         });
 
@@ -42,15 +46,13 @@ export class StartMenuComponent {
           if (name && name.trim().length > 0) {
             await this.userService.createUserProfile(name.trim());
             this.userProfile = await this.userService.loadUserProfile();
+
+            this.name = name;
           }
-          this.loading = false;
         });
       }
-    }, 500);
-
-    
+    }, 200);
   }
-
 
   startGame() {
     this._router.navigateByUrl('/game')

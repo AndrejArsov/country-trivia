@@ -1,4 +1,4 @@
-// user.service.ts
+
 import { Injectable } from "@angular/core";
 import { initializeApp } from "firebase/app";
 import {
@@ -128,6 +128,11 @@ export class UserService {
     const snapshot = await getDocs(collection(this.firestore, "scores"));
     return snapshot.docs.map((doc) => doc.data());
   }
+  
+  async getUsers() {
+    const snapshot = await getDocs(collection(this.firestore, "users"));
+    return snapshot.docs.map((doc) => doc.data());
+  }
 
   async getHighScore() {
     let userId = localStorage.getItem("uid")
@@ -179,7 +184,6 @@ export class UserService {
     });
 
     await batch.commit();
-    console.log(`Deleted ${snapshot.size} scores for name: ${name}`);
   }
 
 }

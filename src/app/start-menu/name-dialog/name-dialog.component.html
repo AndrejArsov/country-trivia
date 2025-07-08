@@ -1,7 +1,12 @@
-<h2>Enter your name</h2>
-    <mat-form-field style="width: 100%;">
-      <input matInput [(ngModel)]="name" />
-    </mat-form-field>
-    <div style="margin-top: 20px; text-align: right;">
-      <button mat-raised-button color="primary" (click)="save()">Save</button>
+
+<div class="holder bebas-neue-regular">
+  <h1>Enter your name</h1>
+    <div class="inputHolder">
+      <p id="nameTaken" class="m-0 p-0 d-none responsive-text">That name in already taken</p>
+      <p id="emptyField" class="m-0 p-0 d-none responsive-text">Please enter your name</p>
+      <input class="input" maxlength="10" [(ngModel)]="name" />
     </div>
+    <div class="buttonHolder">
+      <button class="myButton" (click)="save()">Save</button>
+    </div>
+</div>

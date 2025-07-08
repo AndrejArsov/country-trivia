@@ -1,5 +1,16 @@
-<div class="d-flex flex-column align-items-center justify-content-center">
-  <img src="finalNoBg.png" alt="">
-  <button class="startBtn" (click)="startGame()">Start</button>
+@if(loading == true) {
+    <div class="loader-wrapper">
+      <div class="globe-loader"></div>
+      <div class="loader-text">Loading...</div>
+    </div>
+}
+@else {
+<app-user-info [name]="name"></app-user-info>
+<div class="d-flex flex-column align-items-center justify-content-evenly holder">
+  <img class="col-12 col-xl-4 col-lg-8 col-md-10 col-sm-12" src="finalNoBg.png" alt="">
+    
+  <button class="startBtn col-8 col-xl-3 col-lg-4 col-md-6 col-sm-8" (click)="startGame()">Start</button>
 
 </div>
+}
+

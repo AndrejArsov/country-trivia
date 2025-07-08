@@ -4,7 +4,7 @@
     font-size: 48px;
     border: none;
     border-radius: 10px;
-    padding: 10px 24px;
+    padding: 0px 24px;
     cursor: pointer;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     transition: box-shadow 0.3s ease, transform 0.3s ease;
@@ -21,4 +21,7 @@
 }
 .font {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+.holder {
+    height: calc(100vh - 160px);
 }

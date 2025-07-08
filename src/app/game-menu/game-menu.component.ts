@@ -9,10 +9,10 @@ import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-game-menu',
+  standalone: true,
   imports: [HttpClientModule, CommonModule, ShortNumberPipe],
   templateUrl: './game-menu.component.html',
   styleUrls: ['./game-menu.component.scss', '../../bootstrap.css'],
-  
 })
 export class GameMenuComponent {
   time = 60
@@ -38,6 +38,7 @@ export class GameMenuComponent {
   countryList = <any>[]
   countryName!: string;
   numOfCountries!: number
+  correctAnswer! : string
 
   questions = [
     {
@@ -78,9 +79,25 @@ export class GameMenuComponent {
   highScore: any;
   name!: string;
 
+  responsiveHeight = "90"
+  
+  historyHolder: any;
+
+  prevVal!: boolean
+  prevI!: number
+  prevChosenAnswer!: string | number
+  prevQuestion!: string;
+  prevCountryName!: string;
+  prevCorrectAnswer!: string;
+
+  historyQuestionIndex = 0
+
+  loading!: boolean;
 
   async ngOnInit() {
+    this.loading = true
     this.getToken()
+
     
   } 
 
@@ -107,6 +124,7 @@ export class GameMenuComponent {
     if (this.time < 1) {
       this.score = this.points * this.percentage * 10
       this.isGameActive = false
+      this.responsiveHeight = "70"
       this.countryName = "GAME OVER"
       this.question = ""
       this._user.incrementGamesPlayed()
@@ -141,13 +159,18 @@ export class GameMenuComponent {
       this.updateTime()
     }, 1000)
 
+    this.loading = false
+
     this.getCountry()
     this.percentage = 0
     this.points = 0
     this.optionsAttempted = 0
     this.isGameActive = true
+    this.responsiveHeight = "90"
     this.time = 60
     this.dynamicBg = 'rgba(26, 255, 0, 0.55)';
+    this.historyQuestionIndex = 0
+    this.historyHolder.innerHTML = ''
   }
   getToken() {
     const headers = new HttpHeaders({
@@ -193,6 +216,7 @@ export class GameMenuComponent {
       const correctAnswer = randomCountry.area
       possibleAnswer.answer = correctAnswer
       this.possibleAnswers.push(possibleAnswer)
+      this.correctAnswer = correctAnswer
       
       for (let index = 0; index < 3; index++) {
         var possibleWrongAnswer: answer = { answer: '', correct: false };
@@ -213,7 +237,6 @@ export class GameMenuComponent {
         this.possibleAnswers.push(possibleWrongAnswer)
 
       }
-      console.log(this.possibleAnswers)
       this.possibleAnswers = this.shuffle(this.possibleAnswers)
       
     }
@@ -223,6 +246,7 @@ export class GameMenuComponent {
       const correctAnswer = randomCountry.capital[0]
       possibleAnswer.answer = correctAnswer
       this.possibleAnswers.push(possibleAnswer)
+      this.correctAnswer = correctAnswer
 
       for (let index = 0; index < 3; index++) {
         var possibleWrongAnswer: answer = { answer: '', correct: false };
@@ -243,7 +267,6 @@ export class GameMenuComponent {
         this.possibleAnswers.push(possibleWrongAnswer)
 
       }
-      console.log(this.possibleAnswers)
       
       this.possibleAnswers = this.shuffle(this.possibleAnswers)
     }
@@ -253,6 +276,7 @@ export class GameMenuComponent {
       const correctAnswer = randomCountry.population
       possibleAnswer.answer = correctAnswer
       this.possibleAnswers.push(possibleAnswer)
+      this.correctAnswer = correctAnswer
 
       for (let index = 0; index < 3; index++) {
         var possibleWrongAnswer: answer = { answer: '', correct: false };
@@ -273,7 +297,6 @@ export class GameMenuComponent {
         this.possibleAnswers.push(possibleWrongAnswer)
 
       }
-      console.log(this.possibleAnswers)
       this.possibleAnswers = this.shuffle(this.possibleAnswers)
     }
     else if(this.randomCategory == 'border') {
@@ -294,6 +317,7 @@ export class GameMenuComponent {
       const correctAnswer = randomCountry.borders.length
       possibleAnswer.answer = correctAnswer
       this.possibleAnswers.push(possibleAnswer)
+      this.correctAnswer = correctAnswer
 
       for (let index = 0; index < 3; index++) {
         var possibleWrongAnswer: answer = { answer: '', correct: false };
@@ -331,7 +355,6 @@ export class GameMenuComponent {
         this.possibleAnswers.push(possibleWrongAnswer)
 
       }
-      console.log(this.possibleAnswers)
       
       this.possibleAnswers = this.shuffle(this.possibleAnswers)
     }
@@ -341,6 +364,7 @@ export class GameMenuComponent {
       const correctAnswer = randomCountry.region
       possibleAnswer.answer = correctAnswer
       this.possibleAnswers.push(possibleAnswer)
+      this.correctAnswer = correctAnswer
 
       for (let index = 0; index < 3; index++) {
         var possibleWrongAnswer: answer = { answer: '', correct: false };
@@ -362,7 +386,6 @@ export class GameMenuComponent {
         this.possibleAnswers.push(possibleWrongAnswer)
 
       }
-      console.log(this.possibleAnswers)
       
       this.possibleAnswers = this.shuffle(this.possibleAnswers)
     }
@@ -374,6 +397,7 @@ export class GameMenuComponent {
       const correctAnswer = currencyObject[currencyKey].name;
       possibleAnswer.answer = correctAnswer
       this.possibleAnswers.push(possibleAnswer)
+      this.correctAnswer = correctAnswer
 
       for (let index = 0; index < 3; index++) {
         var possibleWrongAnswer: answer = { answer: '', correct: false };
@@ -398,7 +422,6 @@ export class GameMenuComponent {
         this.possibleAnswers.push(possibleWrongAnswer)
 
       }
-      console.log(this.possibleAnswers)
       
       this.possibleAnswers = this.shuffle(this.possibleAnswers)
     }
@@ -408,6 +431,7 @@ export class GameMenuComponent {
       const correctAnswer = randomCountry.flags.png
       possibleAnswer.answer = correctAnswer
       this.possibleAnswers.push(possibleAnswer!)
+      this.correctAnswer = correctAnswer
 
       for (let index = 0; index < 3; index++) {
         var possibleWrongAnswer: answer = { answer: '', correct: false };
@@ -428,28 +452,44 @@ export class GameMenuComponent {
         this.possibleAnswers.push(possibleWrongAnswer)
 
       }
-      console.log(this.possibleAnswers)
       this.possibleAnswers = this.shuffle(this.possibleAnswers)
     }
     
   }
+  
 
-  checkAnswer(val : boolean, i : number) {
-      console.log(val)
-      let selectedOption = document.getElementById("answer_" + val + "_" + i)
+  checkAnswer(val : boolean, i : number, chosenAnswer : string | number) {
+    this.historyHolder = document.getElementById("historyDiv")
+    
+      if((this.prevVal == val) && (this.prevI == i) && (this.prevChosenAnswer == chosenAnswer) && (this.prevQuestion == this.question) && (this.prevCountryName == this.countryName) && (this.prevCorrectAnswer == this.correctAnswer)) {
+        console.log("clicked too fast")
 
-      if(val == true) {
-        selectedOption!.style.backgroundColor = 'lime'
-        this.points++
       }
-      else if(val == false) {
-        selectedOption!.style.backgroundColor = 'red'
-      }
-      setTimeout(() => {
-        if(this.time != 0) {
-          this.getCountry();
+      else {
+        this.prevVal = val
+        this.prevI = i
+        this.prevChosenAnswer = chosenAnswer
+        this.prevQuestion = this.question
+        this.prevCountryName = this.countryName
+        this.prevCorrectAnswer = this.correctAnswer
+
+        let selectedOption = document.getElementById("answer_" + val + "_" + i)
+
+        if(val == true) {
+          selectedOption!.style.backgroundColor = 'lime'
+          this.points++
         }
-      }, 200);
+        else if(val == false) {
+          selectedOption!.style.backgroundColor = 'red'
+        }
+        this.addToHistory(val, chosenAnswer, this.question, this.countryName, this.correctAnswer)
+        setTimeout(() => {
+          if(this.time != 0) {
+            this.getCountry();
+          }
+        }, 200);
+      }
+      
     
   }
 
@@ -460,10 +500,148 @@ export class GameMenuComponent {
   }
   return array;
   }
+
   goBack() {
     this._router.navigateByUrl('/')
   }
-  
+
+  addToHistory(wasCorrect: boolean,  chosenAnswer: string | number, question: string, name: string, correctAnswer : string | number) {
+    
+    this.historyQuestionIndex++
+    const div = document.createElement('div');
+    const formattedChosenAnswer = typeof chosenAnswer === 'number' ? this.transformNumber(chosenAnswer) : chosenAnswer;
+    const formattedCorrectAnswer = typeof correctAnswer === 'number' ? this.transformNumber(correctAnswer) : correctAnswer;
+
+    div.classList.add('historyOption', 'col-12', wasCorrect ? 'bg-correct' : 'bg-wrong', 'flex-xl-row', 'flex-lg-row', 'flex-md-column', 'flex-sm-column', 'flex-column', 'd-flex', 'fs-xs-5' , 'fs-sm-1', 'fs-md-1', 'fs-lg-2', 'fs-xl-custom', 'fs-xxl-custom'
+    );
+    if(wasCorrect == true) {
+      if(question == this.questions[4].question) {
+        div.innerHTML += `
+
+              <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 d-flex align-items-md-start align-items-sm-start align-items-lg-center align-items-xl-center align-items-start pe-1">
+                    <div class="col-1 pe-2 d-flex justify-content-center align-items-center">
+                        #${this.historyQuestionIndex}
+                    </div>
+                    <div class="col-11 ps-2 d-flex justify-content-start align-items-center">
+                        ${question} ${name}
+                    </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 d-flex align-items-start ps-1">
+                    <div class="col-12 d-flex flex-column justify-content-center align-items-start p-1">
+                        <p class="p-0 m-0">Chosen: </p> <img class="historyFlag" loading="lazy" src="${chosenAnswer}" alt="">
+                    </div>
+                </div>
+        `
+      }
+      else if (question == this.questions[1].question) {
+        
+        div.innerHTML += `
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 d-flex align-items-md-start align-items-sm-start align-items-lg-center align-items-xl-center align-items-start pe-1">
+                    <div class="col-1 pe-2 d-flex justify-content-center align-items-center">
+                        #${this.historyQuestionIndex}
+                    </div>
+                    <div class="col-11 ps-2 d-flex justify-content-start align-items-center">
+                        ${question} ${name}
+                    </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 d-flex align-items-start ps-1">
+                    <div class="col-12 d-flex flex-column justify-content-center align-items-start p-1">
+                        <p class="p-0 m-0">Chosen: </p> ${formattedChosenAnswer} km²
+                    </div>
+                </div>
+        `
+      }
+      else {
+        div.innerHTML += `
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 d-flex align-items-md-start align-items-sm-start align-items-lg-center align-items-xl-center align-items-start pe-1">
+                    <div class="col-1 pe-2 d-flex justify-content-center align-items-center">
+                        #${this.historyQuestionIndex}
+                    </div>
+                    <div class="col-11 ps-2 d-flex justify-content-start align-items-center">
+                        ${question} ${name}
+                    </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 d-flex align-items-start ps-1">
+                    <div class="col-12 d-flex flex-column justify-content-center align-items-start p-1">
+                        <p class="p-0 m-0">Chosen: </p> ${formattedChosenAnswer}
+                    </div>
+                </div>
+        `
+      }
+    }
+    else {
+      if(question == this.questions[4].question) {
+        div.innerHTML += `
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 d-flex align-items-md-start align-items-sm-start align-items-lg-center align-items-xl-center align-items-start pe-1">
+                    <div class="col-1 pe-2 d-flex justify-content-center align-items-center">
+                        #${this.historyQuestionIndex}
+                    </div>
+                    <div class="col-11 ps-2 d-flex justify-content-start align-items-center">
+                        ${question} ${name}
+                    </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 d-flex align-items-start ps-1">
+                    <div class="col-6 d-flex flex-column justify-content-center align-items-start p-1">
+                        <p class="p-0 m-0">Chosen: </p> <img class="historyFlag" loading="lazy" src="${chosenAnswer}" alt="">
+                    </div>
+                    <div class="col-6 d-flex flex-column justify-content-center align-items-start p-1">
+                        <p class="p-0 m-0">Correct: </p> <img class="historyFlag" loading="lazy" src="${correctAnswer}" alt="">
+                    </div>
+                </div>
+        `
+      }
+      else if (question == this.questions[1].question) {
+        
+        div.innerHTML += `
+            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 d-flex align-items-md-start align-items-sm-start align-items-lg-center align-items-xl-center align-items-start pe-1">
+                    <div class="col-1 pe-2 d-flex justify-content-center align-items-center">
+                        #${this.historyQuestionIndex}
+                    </div>
+                    <div class="col-11 ps-2 d-flex justify-content-start align-items-center">
+                        ${question} ${name}
+                    </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 d-flex align-items-start ps-1">
+                    <div class="col-6 d-flex flex-column justify-content-center align-items-start p-1">
+                        <p class="p-0 m-0">Chosen: </p> ${formattedChosenAnswer} km²
+                    </div>
+                    <div class="col-6 d-flex flex-column justify-content-center align-items-start p-1">
+                            <p class="p-0 m-0">Correct: </p> ${formattedCorrectAnswer} km²
+                    </div>
+            </div>
+            
+        `
+      }
+      else {
+        div.innerHTML += `
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 d-flex align-items-md-start align-items-sm-start align-items-lg-center align-items-xl-center align-items-start pe-1">
+                    <div class="col-1 pe-2 d-flex justify-content-center align-items-center">
+                        #${this.historyQuestionIndex}
+                    </div>
+                    <div class="col-11 ps-2 d-flex justify-content-start align-items-center">
+                        ${question} ${name}
+                    </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 d-flex align-items-start ps-1">
+                    <div class="col-6 d-flex flex-column justify-content-center align-items-start p-1">
+                        <p class="p-0 m-0">Chosen: </p> ${formattedChosenAnswer}
+                    </div>
+                    <div class="col-6 d-flex flex-column justify-content-center align-items-start p-1">
+                        <p class="p-0 m-0">Correct: </p> ${formattedCorrectAnswer}
+                    </div>
+                </div>
+        `
+      }
+    }
+    this.historyHolder!.appendChild(div);
+  }
+
+  transformNumber (value: number): string {
+    if (value >= 1_000_000_000) return (value / 1_000_000_000).toFixed(1) + 'B';
+    if (value >= 1_000_000) return (value / 1_000_000).toFixed(1) + 'M';
+    if (value >= 1_000) return (value / 1_000).toFixed(1) + 'K';
+    return value.toString();
+  }
   
 }
 

@@ -1,23 +1,46 @@
-import { Component } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { Component, inject } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 import { FormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
 import { CommonModule } from '@angular/common';
+import { UserService } from '../../user.service';
 
 @Component({
   selector: 'app-name-dialog',
-  imports: [CommonModule, MatFormFieldModule, MatInputModule, FormsModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './name-dialog.component.html',
-  styleUrl: './name-dialog.component.css'
+  styleUrls: ['./name-dialog.component.css', '../../../bootstrap.css']
 })
 export class NameDialogComponent {
   name: string = '';
+  subscription: any;
 
-  constructor(public dialogRef: MatDialogRef<NameDialogComponent>) {}
+  constructor(public dialogRef: MatDialogRef<NameDialogComponent>, private userService: UserService,) {}
 
-  save() {
-    this.dialogRef.close(this.name);
+  
+  async save() {
+    var isTaken = false
+
+    const emptyName = document.getElementById('emptyField')
+    const takenName = document.getElementById('nameTaken')
+    
+    emptyName?.classList.add('d-none')
+    takenName?.classList.add('d-none')
+    
+    if((this.name == '') || (this.name && this.name.trim().length == 0)) {
+      emptyName?.classList.remove('d-none')
+    }
+    else {
+      const users = await this.userService.getUsers()
+      users.forEach(element => {
+        if(element['name'].toLowerCase() == this.name.toLowerCase()) {
+          takenName?.classList.remove('d-none')
+          isTaken = true
+        }
+      });
+      if(isTaken == false) {
+        this.dialogRef.close(this.name);
+      }
+    }
   }
 
 }

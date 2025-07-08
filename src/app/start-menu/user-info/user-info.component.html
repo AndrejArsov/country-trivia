@@ -1,0 +1,24 @@
+@if(loading == true) {
+    <div class="loader-wrapper-user-info">
+      <div class="globe-loader"></div>
+      <div class="loader-text">Loading...</div>
+    </div>
+}
+@else {
+  <div class="col-12 d-flex justify-content-center bebas-neue-regular">
+    <div class="col-xl-7 col-lg-8 col-md-10 col-sm-12 col-12 d-flex justify-content-evenly holder">
+        <div class="d-flex flex-column justify-content-center align-items-center sidetextHolder">
+            <p class="fs-3 p-0 m-0">High Score</p>
+            <p class="fs-1 p-0 m-0"> {{highScore | number: "1.1-1"}}</p>
+        </div>
+
+        <span class="d-flex flex-column align-items-center justify-content-center"><p class="fs-3 p-0 m-0">Name</p> <span class="fs-1 p-0 m-0">{{name}}</span></span>
+
+        <div class="d-flex flex-column justify-content-center align-items-center sidetextHolder">
+            <p class="fs-3 p-0 m-0">Games Played</p>
+            <p class="fs-1 p-0 m-0"> {{gamesPlayed}}</p>
+        </div>
+    </div>
+</div>  
+}
+
