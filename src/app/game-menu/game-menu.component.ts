@@ -462,7 +462,7 @@ export class GameMenuComponent {
     this.historyHolder = document.getElementById("historyDiv")
     
       if((this.prevVal == val) && (this.prevI == i) && (this.prevChosenAnswer == chosenAnswer) && (this.prevQuestion == this.question) && (this.prevCountryName == this.countryName) && (this.prevCorrectAnswer == this.correctAnswer)) {
-        console.log("clicked too fast")
+        
 
       }
       else {

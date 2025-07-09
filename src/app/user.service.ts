@@ -49,7 +49,6 @@ export class UserService {
   constructor() {
     onAuthStateChanged(this.auth, (user) => {
       if (user) {
-        console.log("User signed in:", user);
         this.currentUser = user;
         localStorage.setItem("uid", user.uid);
       } else {
@@ -62,7 +61,6 @@ export class UserService {
     const result = await signInAnonymously(this.auth);
     this.currentUser = result.user;
     localStorage.setItem("uid", result.user.uid);
-    console.log("Signed in anonymously:", result.user.uid);
   }
 
   async createUserProfile(name: string): Promise<void> {
@@ -76,7 +74,6 @@ export class UserService {
       createdAt: new Date(),
       uid: this.currentUser.uid
     });
-    console.log("User profile created");
   }
 
   async loadUserProfile(): Promise<any> {
@@ -103,7 +100,6 @@ export class UserService {
     const uid = this.currentUser.uid;
     const userRef = doc(this.firestore, "users", uid);
     await updateDoc(userRef, { highScore: newScore });
-    console.log("High score updated");
   }
 
   async incrementGamesPlayed(): Promise<void> {
@@ -111,7 +107,6 @@ export class UserService {
     const uid = this.currentUser.uid;
     const userRef = doc(this.firestore, "users", uid);
     await updateDoc(userRef, { gamesPlayed: increment(1) });
-    console.log("Games played incremented");
   }
 
   getCurrentUid(): string | null {
