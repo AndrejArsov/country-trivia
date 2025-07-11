@@ -93,6 +93,7 @@ export class GameMenuComponent {
   historyQuestionIndex = 0
 
   loading!: boolean;
+  answerLocked!: boolean;
 
   async ngOnInit() {
     this.loading = true
@@ -454,11 +455,15 @@ export class GameMenuComponent {
       }
       this.possibleAnswers = this.shuffle(this.possibleAnswers)
     }
+    this.answerLocked = false;
     
   }
   
 
   checkAnswer(val : boolean, i : number, chosenAnswer : string | number) {
+    if (this.answerLocked) return;
+    this.answerLocked = true;
+    
     this.historyHolder = document.getElementById("historyDiv")
     
       if((this.prevVal == val) && (this.prevI == i) && (this.prevChosenAnswer == chosenAnswer) && (this.prevQuestion == this.question) && (this.prevCountryName == this.countryName) && (this.prevCorrectAnswer == this.correctAnswer)) {
