@@ -101,7 +101,7 @@ export class GameMenuComponent {
     
   } 
 
-  updateTime() {
+  async updateTime() {
     this.time --
     if (this.time > 40) {
       this.dynamicBg = 'rgba(26, 255, 0, 0.55)';
@@ -129,13 +129,10 @@ export class GameMenuComponent {
       this.question = ""
       this._user.incrementGamesPlayed()
       if(this.score > this.highScore) {
-        this._user.deleteScoresByName(this.name)
-        setTimeout(() => {
-          this._user.updateHighScore(this.score)
-          this._user.saveScore(this.name, this.score);
-        }, 300);
+        await this._user.deleteScoresByName(this.name)
+        await this._user.updateHighScore(this.score)
+        this._user.saveScore(this.name, this.score);
       }
-      clearInterval(this.interval)
     }
   }
 
