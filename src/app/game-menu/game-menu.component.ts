@@ -122,7 +122,7 @@ export class GameMenuComponent {
     else {
       this.dynamicBg = 'rgba(255, 0, 0, 0.63)';
     }
-    if (this.time < 1) {
+    if (this.time == 0) {
       this.score = this.points * this.percentage * 10
       this.isGameActive = false
       this.responsiveHeight = "75"
@@ -455,7 +455,10 @@ export class GameMenuComponent {
       }
       this.possibleAnswers = this.shuffle(this.possibleAnswers)
     }
-    this.answerLocked = false;
+    setTimeout(() => {
+      this.answerLocked = false;
+          
+      }, 400);
     
   }
   
@@ -492,7 +495,7 @@ export class GameMenuComponent {
           if(this.time != 0) {
             this.getCountry();
           }
-        }, 1000);
+        }, 200);
       }
       
     
