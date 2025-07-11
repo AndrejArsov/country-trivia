@@ -10,6 +10,6 @@ import { Router } from "@angular/router";
 export class FourOFourComponent {
     private _router = inject(Router)
     ngOnInit() {
-        this._router.navigateByUrl('/')
+        this._router.navigateByUrl('/country-trivia')
     }
 }
