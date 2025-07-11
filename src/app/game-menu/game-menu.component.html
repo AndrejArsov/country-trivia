@@ -34,7 +34,7 @@
             <p class="bebas-neue-regular m-0 p-0">Correct : {{points}} / {{optionsAttempted}}</p>
         </div>
         </div>
-        <div class="nameDiv col-xl-5 col-lg-7 col-md-10 col-sm-11 col-11 d-flex justify-content-center align-items-center flex-column pt-4">
+        <div class="nameDiv col-xl-5 col-lg-7 col-md-10 col-sm-11 col-11 d-flex justify-content-center align-items-center flex-column pt-4" [ngClass]="{ 'mt-5': !isGameActive }">
             <div class="col-12 d-flex justify-content-center align-items-center fs-md-2 fs-lg-2 fs-xl-3 fs-xxl-3 fs-sm-2 fs-xs-2">
                 <p class="question bebas-neue-regular">{{ question }}</p>
             </div>
@@ -108,13 +108,16 @@
                         <p class="m-0 p-0 optionText">Play Again</p>
                     </div>
                 </div>
+                <div class="col-12 bebas-neue-regular">
+                    <button class="leaderBtn col-12" (click)="goToLeaderboard()">Leaderboard</button>
+                </div>
             </ng-container>
         </div>
     </div>
     
     <div class="historyDiv mt-4 col-xl-7 col-lg-9 col-md-11 col-sm-11 col-11 d-flex flex-column justify-content-center align-items-center bebas-neue-regular p-3 mb-5">
         <div>
-            <h1>Game History</h1>
+            <h1 class="fontColor">Game History</h1>
         </div>
         <div id="historyDiv" class="col-12 d-flex flex-column justify-content-center align-items-center">
           

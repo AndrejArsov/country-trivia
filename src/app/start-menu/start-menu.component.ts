@@ -58,5 +58,8 @@ export class StartMenuComponent {
     this._router.navigateByUrl('/game')
   }
 
+  goToLeaderboard() {
+    this._router.navigateByUrl('/leaderboard')
+  }
   
 }

@@ -1,0 +1,189 @@
+@if(loading == true) {
+    <div class="loader-wrapper">
+      <div class="globe-loader"></div>
+      <div class="loader-text">Loading...</div>
+    </div>
+}
+@else {
+    <div class="col-12 header d-flex justify-content-between align-items-center bebas-neue-regular p-3">
+    <div class="d-none d-xl-flex d-lg-flex d-md-flex">
+        <img class="logo" src="finalNoBg.png" alt="">
+    </div>
+
+    <div class="mainTextHolder">
+        <p class="mainText p-0 m-0" >Leaderboard</p>
+    </div>
+    
+    <div class="goBack" (click)="goBack()">
+         <p class="p-0 m-0 d-flex">Go back</p>
+    </div>
+    </div>
+    <div class="col-12 d-flex flex-column flex-sm-column flex-md-column flex-lg-row flex-xl-row bebas-neue-regular">
+        <div class="col-12 col-xl-6 col-lg-6 col-md-12 col-sm-12 d-flex justify-content-center flex-column align-items-center">
+            
+                <h2>Top Scores</h2>
+                <div class="table-wrapper col-11 col-xl-8 col-lg-9 col-md-10 col-sm-11">
+                    <table mat-table [dataSource]="dataSource" class="myTable" matSort>
+                    <!-- rank -->
+                    <ng-container matColumnDef="rank">
+                        <th class="text-center bebas-neue-regular b-l" mat-header-cell *matHeaderCellDef>
+                        Rank
+                        </th>
+                        <td class="bebas-neue-regular text-center" mat-cell *matCellDef="let row">{{ row.rank }}</td>
+                    </ng-container>
+
+                    <!-- name -->
+                    <ng-container matColumnDef="name">
+                        <th class="bebas-neue-regular" mat-header-cell *matHeaderCellDef>
+                        Name
+                        </th>
+                        <td class="bebas-neue-regular" mat-cell *matCellDef="let row">{{ row.name }}</td>
+                    </ng-container>
+
+                    <!-- score -->
+                    <ng-container matColumnDef="score">
+                        <th class="bebas-neue-regular" mat-header-cell *matHeaderCellDef>
+                        Score
+                        </th>
+                        <td class="bebas-neue-regular" mat-cell *matCellDef="let row">{{ row.score | number: "1.1-1"}}</td>
+                    </ng-container>
+
+                    <!-- date -->
+                    <ng-container matColumnDef="date">
+                        <th class="bebas-neue-regular b-r" mat-header-cell *matHeaderCellDef>
+                        Date
+                        </th>
+                        <td class="bebas-neue-regular" mat-cell *matCellDef="let row">{{ row.date | date: 'mediumDate' }}</td>
+                    </ng-container>
+
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr
+                        id="row_{{ row.name }}_{{row.score}}"
+                        mat-row
+                        *matRowDef="let row; columns: displayedColumns"
+                    ></tr>
+                    </table>
+                </div>
+                <div *ngIf="foundUser == true" class="col-11 col-xl-8 col-lg-9 col-md-10 col-sm-11">
+                    <table mat-table [dataSource]="dataSourceActive" class="myTable" matSort>
+                    <!-- rank -->
+                    <ng-container matColumnDef="rank" >
+                        
+                        <td style="width: 18.4% !important;" class="bebas-neue-regular text-center" mat-cell *matCellDef="let row">{{ row.rank }}</td>
+                    </ng-container>
+
+                    <!-- name -->
+                    <ng-container matColumnDef="name">
+                        
+                        <td style="width: 28.97% !important;" class="bebas-neue-regular" mat-cell *matCellDef="let row">{{ row.name }}</td>
+                    </ng-container>
+
+                    <!-- score -->
+                    <ng-container matColumnDef="score">
+                    
+                        <td style="width: 20.28% !important;" class="bebas-neue-regular" mat-cell *matCellDef="let row">{{ row.score | number: "1.1-1"}}</td>
+                    </ng-container>
+
+                    <!-- date -->
+                    <ng-container matColumnDef="date">
+                        
+                        <td class="bebas-neue-regular" mat-cell *matCellDef="let row">{{ row.date | date: 'mediumDate' }}</td>
+                    </ng-container>
+
+
+                    
+                    <tr
+                        mat-row
+                        *matRowDef="let row; columns: displayedColumns"
+                        class="selectedUserBg"
+                    ></tr>
+                    </table>
+                </div>
+                
+        </div>
+        <div class="col-12 col-xl-6 col-lg-6 col-md-12 col-sm-12 d-flex justify-content-start flex-column align-items-center mt-5 mt-lg-0 mt-xl-0 mb-5 mb-lg-0 mb-xl-0">
+            
+                <h2>Top Games Played</h2>
+                <div class="table-wrapper col-11 col-xl-8 col-lg-9 col-md-10 col-sm-11">
+                    <table mat-table [dataSource]="dataSourceGames" class="myTable" matSort>
+                    <!-- rank -->
+                    <ng-container matColumnDef="rank">
+                        <th class="text-center bebas-neue-regular b-l" mat-header-cell *matHeaderCellDef>
+                        Rank
+                        </th>
+                        <td class="bebas-neue-regular text-center" mat-cell *matCellDef="let row">{{ row.rank }}</td>
+                    </ng-container>
+
+                    <!-- name -->
+                    <ng-container matColumnDef="name">
+                        <th class="bebas-neue-regular text-xs-center" mat-header-cell *matHeaderCellDef>
+                        Name
+                        </th>
+                        <td class="bebas-neue-regular" mat-cell *matCellDef="let row">{{ row.name }}</td>
+                    </ng-container>
+
+                    <!-- score -->
+                    <ng-container matColumnDef="gamesPlayed">
+                        <th class="bebas-neue-regular text-center" mat-header-cell *matHeaderCellDef>
+                        Games Played
+                        </th>
+                        <td class="bebas-neue-regular text-center" mat-cell *matCellDef="let row">{{ row.gamesPlayed}}</td>
+                    </ng-container>
+
+                    <!-- date -->
+                    <ng-container matColumnDef="createdAt">
+                        <th class="bebas-neue-regular b-r text-xs-center" mat-header-cell *matHeaderCellDef>
+                        Date Created
+                        </th>
+                        <td class="bebas-neue-regular text-xs-center" mat-cell *matCellDef="let row">{{ row.createdAt | date: 'mediumDate' }}</td>
+                    </ng-container>
+
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumnsGames"></tr>
+                    <tr
+                        id="row_{{ row.name }}_{{row.gamesPlayed}}_games"
+                        mat-row
+                        *matRowDef="let row; columns: displayedColumnsGames"
+                    ></tr>
+                    </table>
+                </div>
+                <div *ngIf="foundUserGames == true" class="col-11 col-xl-8 col-lg-9 col-md-10 col-sm-11">
+                    <table mat-table [dataSource]="dataSourceActiveGames" class="myTable" matSort>
+                    <!-- rank -->
+                    <ng-container matColumnDef="rank" >
+                        
+                        <td style="width: 15.17% !important;" class="bebas-neue-regular text-center" mat-cell *matCellDef="let row">{{ row.rank }}</td>
+                    </ng-container>
+
+                    <!-- name -->
+                    <ng-container matColumnDef="name">
+                        
+                        <td style="width: 25% !important;" class="bebas-neue-regular" mat-cell *matCellDef="let row">{{ row.name }}</td>
+                    </ng-container>
+
+                    <!-- score -->
+                    <ng-container matColumnDef="gamesPlayed">
+                    
+                        <td style="width: 30.29% !important;" class="bebas-neue-regular text-center" mat-cell *matCellDef="let row">{{ row.gamesPlayed }}</td>
+                    </ng-container>
+
+                    <!-- date -->
+                    <ng-container matColumnDef="createdAt">
+                        
+                        <td class="bebas-neue-regular text-xs-center" mat-cell *matCellDef="let row">{{ row.createdAt | date: 'mediumDate' }}</td>
+                    </ng-container>
+
+
+                    
+                    <tr
+                        mat-row
+                        *matRowDef="let row; columns: displayedColumnsGames"
+                        class="selectedUserBg"
+                    ></tr>
+                    </table>
+                </div>
+                
+        </div>
+    </div>
+}

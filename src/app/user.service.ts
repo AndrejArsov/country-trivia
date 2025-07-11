@@ -21,6 +21,7 @@ import {
   query,
   where,
   writeBatch,
+  orderBy
 } from "firebase/firestore";
 import { environment } from "../enviroments/enviroment";
 
@@ -122,12 +123,20 @@ export class UserService {
   }
 
   async getScores() {
-    const snapshot = await getDocs(collection(this.firestore, "scores"));
-    return snapshot.docs.map((doc) => doc.data());
-  }
+  const scoresQuery = query(
+    collection(this.firestore, "scores"),
+    orderBy("score", "desc")  // sort descending by "score"
+  );
+  const snapshot = await getDocs(scoresQuery);
+  return snapshot.docs.map((doc) => doc.data());
+}
   
   async getUsers() {
-    const snapshot = await getDocs(collection(this.firestore, "users"));
+    const scoresQuery = query(
+      collection(this.firestore, "users"),
+      orderBy("gamesPlayed", "desc")  // sort descending by "gamesPlayed"
+    );
+    const snapshot = await getDocs(scoresQuery);
     return snapshot.docs.map((doc) => doc.data());
   }
 

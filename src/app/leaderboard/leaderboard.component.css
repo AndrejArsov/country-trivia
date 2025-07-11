@@ -1,0 +1,94 @@
+.bebas-neue-regular {
+  font-family: "Bebas Neue", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+.goBack {
+    cursor: pointer;
+    font-size: 32px;
+}
+.mainText {
+    font-size: 48px;
+}
+.logo {
+    height: 120px;
+}
+.mainTextHolder {
+    color: white;
+    background-color: limegreen;
+    border-radius: 10px;
+    padding: 10px;
+}
+.myTable {
+    background-color: white !important;
+}
+.table-wrapper {
+    max-height: 60vh;
+    overflow-y: auto;
+}
+.table-wrapper::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+.table-wrapper::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 8px;
+}
+
+/* Thumb */
+.table-wrapper::-webkit-scrollbar-thumb {
+  background-color: limegreen; /* Your vibrant green */
+  border-radius: 8px;
+  border: 2px solid #f1f1f1;
+}
+
+/* Thumb on hover */
+.table-wrapper::-webkit-scrollbar-thumb:hover {
+  background-color: #2cb521;
+}
+/* Lighten header row */
+::ng-deep .myTable .mat-mdc-header-row {
+  background-color: limegreen !important;
+  color: #222 !important;
+  font-weight: bold;
+  border-radius: 10px !important;
+}
+
+/* Lighten table rows */
+::ng-deep .myTable .mat-mdc-row {
+  background-color: white !important;
+  color: black !important;
+  border-bottom: 1px solid #ccc;
+}
+
+/* Cell spacing and text styling */
+::ng-deep .myTable .mat-mdc-cell {
+  padding: 12px !important;
+  font-size: 18px;
+  color: black !important;
+}
+::ng-deep .myTable .mat-mdc-header-cell {
+  padding: 12px !important;
+  font-size: 22px;
+  color: white !important;
+}
+.b-l {
+    border-top-left-radius: 10px;
+}
+.b-r {
+    border-top-right-radius: 10px;
+}
+.selectedUserBg {
+  background-color: rgba(50, 205, 50, 0.326) !important;
+}
+@media (max-width: 575px) {
+  .text-xs-center {
+    text-align: center;
+  }
+  ::ng-deep .myTable .mat-mdc-header-cell {
+  padding: 12px !important;
+  font-size: 20px;
+  color: white !important;
+}
+}

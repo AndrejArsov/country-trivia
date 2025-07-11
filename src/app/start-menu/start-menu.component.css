@@ -6,7 +6,6 @@
     border-radius: 10px;
     padding: 0px 24px;
     cursor: pointer;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     transition: box-shadow 0.3s ease, transform 0.3s ease;
     animation: startBtn 1s linear 3s infinite;
     box-shadow: 0 0 15px 4px rgb(51, 224, 51);
@@ -19,9 +18,41 @@
     50% { box-shadow: 0 0 25px 8px rgb(51, 224, 51); background-color: rgb(63, 207, 63);}
     100% { box-shadow: 0 0 15px 4px rgb(51, 224, 51); background-color: limegreen;}
 }
-.font {
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-}
 .holder {
     height: calc(100vh - 160px);
+}
+.leaderBtn {
+    background-color: #00A9C3;
+    color: white;
+    font-size: 36px;
+    border: none;
+    border-radius: 10px;
+    padding: 0px 12px;
+    cursor: pointer;
+}
+
+.bebas-neue-regular {
+  font-family: "Bebas Neue", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+@media (min-width: 1200px) {
+    .leaderBtn {
+        background-color: #00A9C3;
+        color: white;
+        font-size: 48px;
+        border: none;
+        border-radius: 10px;
+        padding: 0px 24px;
+        cursor: pointer;
+    }
+}
+@media (min-width: 767px) and (max-width: 991px) {
+    .startBtn {
+        font-size: 56px;
+        padding: 12px 24px;
+    }
+    .leaderBtn {
+        padding: 6px 24px;
+    }
 }

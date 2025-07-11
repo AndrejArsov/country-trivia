@@ -124,7 +124,7 @@ export class GameMenuComponent {
     if (this.time < 1) {
       this.score = this.points * this.percentage * 10
       this.isGameActive = false
-      this.responsiveHeight = "70"
+      this.responsiveHeight = "75"
       this.countryName = "GAME OVER"
       this.question = ""
       this._user.incrementGamesPlayed()
@@ -170,7 +170,10 @@ export class GameMenuComponent {
     this.time = 60
     this.dynamicBg = 'rgba(26, 255, 0, 0.55)';
     this.historyQuestionIndex = 0
-    this.historyHolder.innerHTML = ''
+    if(this.historyHolder) {
+      this.historyHolder.innerHTML = ''
+    }
+    
   }
   getToken() {
     const headers = new HttpHeaders({
@@ -641,6 +644,10 @@ export class GameMenuComponent {
     if (value >= 1_000_000) return (value / 1_000_000).toFixed(1) + 'M';
     if (value >= 1_000) return (value / 1_000).toFixed(1) + 'K';
     return value.toString();
+  }
+
+  goToLeaderboard() {
+    this._router.navigateByUrl('/leaderboard')
   }
   
 }

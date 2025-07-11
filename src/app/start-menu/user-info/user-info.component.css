@@ -37,3 +37,8 @@
     font-size: 3rem;
   }
 }
+@media (min-width: 767px) and (max-width: 991px) {
+  .holder {
+    height: 160px;
+  }
+}

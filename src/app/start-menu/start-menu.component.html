@@ -6,11 +6,12 @@
 }
 @else {
 <app-user-info [name]="name"></app-user-info>
-<div class="d-flex flex-column align-items-center justify-content-evenly holder">
+<div class="d-flex flex-column align-items-center justify-content-evenly holder bebas-neue-regular">
   <img class="col-12 col-xl-4 col-lg-8 col-md-10 col-sm-12" src="finalNoBg.png" alt="">
-    
-  <button class="startBtn col-8 col-xl-3 col-lg-4 col-md-6 col-sm-8" (click)="startGame()">Start</button>
-
+    <div class="d-flex col-12 justify-content-center align-items-center flex-xl-row flex-column gap-2 gap-xl-4">
+      <button class="startBtn col-8 col-xl-3 col-lg-4 col-md-8 col-sm-8" (click)="startGame()">Start</button>
+      <button class="leaderBtn leaderBtn-xl col-8 col-xl-3 col-lg-4 col-md-6 col-sm-8" (click)="goToLeaderboard()">Leaderboard</button>
+    </div>
 </div>
 }
 

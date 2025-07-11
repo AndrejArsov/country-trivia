@@ -34,6 +34,7 @@
   }
 }
 
+
 .bebas-neue-regular {
   font-family: "Bebas Neue", sans-serif;
   font-weight: 400;
@@ -164,6 +165,7 @@
   .fs-md-6 { font-size: 1rem !important; }
   .historyOption { font-size: 32px;}
   .historyFlag { height: 70px; }
+  .name { font-size: 90px;}
 }
 
 /* Large ≥992px */
@@ -198,4 +200,16 @@
   .fs-xxl-5 { font-size: 1.25rem !important; }
   .fs-xxl-6 { font-size: 1rem !important; }
   .fs-xl-custom {font-size: 22px;}
+}
+.leaderBtn {
+    background-color: white;
+    color: #333;
+    font-size: 36px;
+    border: none;
+    border-radius: 10px;
+    padding: 0px 12px;
+    cursor: pointer;
+}
+.fontColor {
+  color: #333;
 }
