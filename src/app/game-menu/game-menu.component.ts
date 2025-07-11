@@ -492,7 +492,7 @@ export class GameMenuComponent {
           if(this.time != 0) {
             this.getCountry();
           }
-        }, 200);
+        }, 1000);
       }
       
     
