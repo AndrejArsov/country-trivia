@@ -15,6 +15,9 @@ import { UserService } from '../user.service';
   styleUrls: ['./game-menu.component.scss', '../../bootstrap.css'],
 })
 export class GameMenuComponent {
+  private lastClickTime = 0;
+  private MIN_CLICK_INTERVAL = 500;
+
   time = 60
   maxTime = 60
 
@@ -455,15 +458,23 @@ export class GameMenuComponent {
       }
       this.possibleAnswers = this.shuffle(this.possibleAnswers)
     }
+    const randomDelay = 300 + Math.random() * 300;
     setTimeout(() => {
       this.answerLocked = false;
           
-      }, 400);
+      }, randomDelay);
     
   }
   
 
   checkAnswer(val : boolean, i : number, chosenAnswer : string | number) {
+    const now = performance.now();
+    if (now - this.lastClickTime < this.MIN_CLICK_INTERVAL) {
+      console.warn('Too fast click ignored');
+      return;
+    }
+    this.lastClickTime = now;
+  
     if (this.answerLocked) return;
     this.answerLocked = true;
     
