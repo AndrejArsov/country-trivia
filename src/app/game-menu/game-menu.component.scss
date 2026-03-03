@@ -16,12 +16,15 @@
     padding: 16px;
     border-radius: 10px;
 }
-.optionsHolder {
-  height: 40vh;
+#optionsHolder {
 }
 .name {
     font-size: 70px;
     color: #333;
+}
+.choiceQuestion {
+  font-size: 50px;
+  color: #333;
 }
 @media (max-width: 440px) {
   .name {
@@ -55,6 +58,7 @@
 .mainHolder {
   min-height: 100vh;
   transition: background-color 0.5s ease-in-out;
+  padding-top: 40px;
 }
 #whiteBg {
   background-color: white;
@@ -135,7 +139,7 @@
 .historyDiv div {
   display: flex !important;
 }
-/* Extra Small */
+
 @media (max-width: 575px) {
   .fs-xs-1 { font-size: calc(1.375rem + 1.5vw) !important; }
   .fs-xs-2 { font-size: calc(1.325rem + 0.9vw) !important; }
@@ -145,7 +149,7 @@
   .fs-xs-6 { font-size: 1rem !important; }
   .mt-xs-1 {margin-top: 1rem;}
 }
-/* Small ≥576px */
+
 @media (min-width: 576px) {
   .fs-sm-1 { font-size: calc(1.375rem + 1.5vw) !important; }
   .fs-sm-2 { font-size: calc(1.325rem + 0.9vw) !important; }
@@ -155,7 +159,7 @@
   .fs-sm-6 { font-size: 1rem !important; }
 }
 
-/* Medium ≥768px */
+
 @media ((min-width: 767px) and (max-width: 991px)) {
   .fs-md-1 { font-size: calc(1.875rem + 1.5vw) !important; }
   .fs-md-2 { font-size: calc(1.325rem + 0.9vw) !important; }
@@ -168,7 +172,7 @@
   .name { font-size: 90px;}
 }
 
-/* Large ≥992px */
+
 @media (min-width: 992px) {
   .fs-lg-1 { font-size: calc(1.375rem + 1.5vw) !important; }
   .fs-lg-2 { font-size: calc(1.325rem + 0.9vw) !important; }
@@ -179,7 +183,7 @@
   .fs-lg-custom {font-size: 22px;}
 }
 
-/* Extra Large ≥1200px */
+
 @media (min-width: 1200px) {
   .fs-xl-1 { font-size: calc(1.375rem + 1.5vw) !important; }
   .fs-xl-2 { font-size: calc(1.325rem + 0.9vw) !important; }
@@ -191,7 +195,7 @@
   
 }
 
-/* XXL ≥1400px */
+
 @media (min-width: 1400px) {
   .fs-xxl-1 { font-size: calc(1.375rem + 1.5vw) !important; }
   .fs-xxl-2 { font-size: calc(1.325rem + 0.9vw) !important; }

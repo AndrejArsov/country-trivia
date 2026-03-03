@@ -1,3 +1,10 @@
+.start-menu-container {
+  min-height: 100vh;
+  width: 100vw;
+  background: linear-gradient(135deg, #32cd32 0%, #00fa9a 100%);
+  display: flex;
+  flex-direction: column;
+}
 .startBtn {
     background-color: limegreen;
     color: white;
@@ -9,6 +16,9 @@
     transition: box-shadow 0.3s ease, transform 0.3s ease;
     animation: startBtn 1s linear 3s infinite;
     box-shadow: 0 0 15px 4px rgb(51, 224, 51);
+}
+.background {
+    background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
 }
 .startBtn:hover { 
     transform: scale(1.05);

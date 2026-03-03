@@ -26,7 +26,7 @@ import {
 import { environment } from "../enviroments/enviroment";
 
 const apiKey = environment.apiKey
-// Initialize Firebase
+
 const firebaseConfig = {
   apiKey: apiKey,
   authDomain: "country-trivia-ae5d2.firebaseapp.com",
@@ -70,7 +70,8 @@ export class UserService {
     const userRef = doc(this.firestore, "users", uid);
     await setDoc(userRef, {
       name,
-      highScore: 0,
+      easyHighScore: 0,
+      hardHighScore: 0,
       gamesPlayed: 0,
       createdAt: new Date(),
       uid: this.currentUser.uid
@@ -96,11 +97,18 @@ export class UserService {
     }
   }
 
-  async updateHighScore(newScore: number): Promise<void> {
+  async updateEasyHighScore(newScore: number): Promise<void> {
     if (!this.currentUser) throw new Error("No authenticated user");
     const uid = this.currentUser.uid;
     const userRef = doc(this.firestore, "users", uid);
-    await updateDoc(userRef, { highScore: newScore });
+    await updateDoc(userRef, { easyHighScore: newScore });
+  }
+  
+  async updateHardHighScore(newScore: number): Promise<void> {
+    if (!this.currentUser) throw new Error("No authenticated user");
+    const uid = this.currentUser.uid;
+    const userRef = doc(this.firestore, "users", uid);
+    await updateDoc(userRef, { hardHighScore: newScore });
   }
 
   async incrementGamesPlayed(): Promise<void> {
@@ -114,33 +122,48 @@ export class UserService {
     return this.currentUser?.uid ?? null;
   }
 
-  async saveScore(name: string, score: number) {
-    await addDoc(collection(this.firestore, "scores"), {
+  async saveEasyScore(name: string, score: number) {
+    await addDoc(collection(this.firestore, "easyScores"), {
+      name,
+      score,
+      date: new Date()
+    });
+  }
+  async saveHardScore(name: string, score: number) {
+    await addDoc(collection(this.firestore, "hardScores"), {
       name,
       score,
       date: new Date()
     });
   }
 
-  async getScores() {
-  const scoresQuery = query(
-    collection(this.firestore, "scores"),
-    orderBy("score", "desc")  // sort descending by "score"
-  );
-  const snapshot = await getDocs(scoresQuery);
-  return snapshot.docs.map((doc) => doc.data());
-}
+  async getEasyScores() {
+    const scoresQuery = query(
+      collection(this.firestore, "easyScores"),
+      orderBy("score", "desc") 
+    );
+    const snapshot = await getDocs(scoresQuery);
+    return snapshot.docs.map((doc) => doc.data());
+  }
+  async getHardScores() {
+    const scoresQuery = query(
+      collection(this.firestore, "hardScores"),
+      orderBy("score", "desc") 
+    );
+    const snapshot = await getDocs(scoresQuery);
+    return snapshot.docs.map((doc) => doc.data());
+  }
   
   async getUsers() {
     const scoresQuery = query(
       collection(this.firestore, "users"),
-      orderBy("gamesPlayed", "desc")  // sort descending by "gamesPlayed"
+      orderBy("gamesPlayed", "desc")
     );
     const snapshot = await getDocs(scoresQuery);
     return snapshot.docs.map((doc) => doc.data());
   }
 
-  async getHighScore() {
+  async getEasyHighScore() {
     let userId = localStorage.getItem("uid")
 
     if (!userId) {
@@ -153,7 +176,25 @@ export class UserService {
     const docRef = doc(this.firestore, "users", userId);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
-      return docSnap.data()!["highScore"];
+      return docSnap.data()!["easyHighScore"];
+    } else {
+      return null;
+    }
+  }
+  async getHardHighScore() {
+    let userId = localStorage.getItem("uid")
+
+    if (!userId) {
+      const credential = await signInAnonymously(this.auth);
+      userId = credential.user.uid;
+      this.currentUser = credential.user;
+      localStorage.setItem("uid", userId);
+    }
+
+    const docRef = doc(this.firestore, "users", userId);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      return docSnap.data()!["hardHighScore"];
     } else {
       return null;
     }
@@ -178,8 +219,21 @@ export class UserService {
     }
   }
   
-  async deleteScoresByName(name: string): Promise<void> {
-    const scoresRef = collection(this.firestore, "scores");
+  async deleteEasyScoresByName(name: string): Promise<void> {
+    const scoresRef = collection(this.firestore, "easyScores");
+    const q = query(scoresRef, where("name", "==", name));
+    const snapshot = await getDocs(q);
+
+    const batch = writeBatch(this.firestore);
+
+    snapshot.forEach((docSnap) => {
+      batch.delete(docSnap.ref);
+    });
+
+    await batch.commit();
+  }
+  async deleteHardScoresByName(name: string): Promise<void> {
+    const scoresRef = collection(this.firestore, "hardScores");
     const q = query(scoresRef, where("name", "==", name));
     const snapshot = await getDocs(q);
 

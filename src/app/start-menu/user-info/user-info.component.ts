@@ -9,12 +9,12 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./user-info.component.css', '../../../bootstrap.css']
 })
 export class UserInfoComponent implements OnChanges {
-  @Input() name!: string | '-';
+  @Input() name!: string | '-'; 
 
   constructor(private _user: UserService) {}
 
-  highScore = 0;
-  gamesPlayed = 0;
+  easyHighScore = 0;
+  hardHighScore = 0;
   loading = true;
 
   ngOnChanges(changes: SimpleChanges) {
@@ -29,8 +29,8 @@ export class UserInfoComponent implements OnChanges {
     this.loading = false
     if(user != null) {
       this.name = user.name
-      this.highScore = user.highScore
-      this.gamesPlayed = user.gamesPlayed
+      this.easyHighScore = user.easyHighScore
+      this.hardHighScore = user.hardHighScore
     }
     else {
       this.name = '-'
@@ -41,7 +41,7 @@ export class UserInfoComponent implements OnChanges {
     const user = await this._user.loadUserProfile();
     this.loading = false
     this.name = user.name;
-    this.highScore = user.highScore;
-    this.gamesPlayed = user.gamesPlayed;
+    this.easyHighScore = user.easyHighScore;
+    this.hardHighScore = user.hardHighScore;
   }
 }

@@ -35,25 +35,26 @@
         </div>
         </div>
         <div class="nameDiv col-xl-5 col-lg-7 col-md-10 col-sm-11 col-11 d-flex justify-content-center align-items-center flex-column pt-4" [ngClass]="{ 'mt-5': !isGameActive }">
-            <div class="col-12 d-flex justify-content-center align-items-center fs-md-2 fs-lg-2 fs-xl-3 fs-xxl-3 fs-sm-2 fs-xs-2">
+            @if(!isChoiceQuestion) {
+                <div class="col-12 d-flex justify-content-center align-items-center fs-md-2 fs-lg-2 fs-xl-3 fs-xxl-3 fs-sm-2 fs-xs-2">
                 <p class="question bebas-neue-regular">{{ question }}</p>
-            </div>
-            <p class="name bebas-neue-regular">{{ countryName }}</p>
+                </div>
+                <p class="name bebas-neue-regular">{{ countryName }}</p>
+            }
+            @else {
+                <div class="text-center">
+                    <p class="choiceQuestion bebas-neue-regular">{{ question }}</p>
+                </div>
+                @if(!isGameActive) {
+                    <p class="name bebas-neue-regular">{{ countryName }}</p>
+                }
+                
+            }
+            
             
         </div>
         
         <div id="optionsHolder" class="optionsDiv col-xl-5 col-lg-7 col-md-10 col-sm-11 col-11 d-flex justify-content-center align-items-center flex-wrap fs-xxl-1 fs-xl-1 fs-lg-1 fs-md-1 fs-sm-2 fs-xs-3">
-            <ng-container *ngIf="randomCategory == 'area' && isGameActive == true">
-                <div
-                    class="col-6 p-2 optionHolder"
-                    *ngFor="let answer of possibleAnswers; let i = index;"
-                    
-                >
-                    <div id="answer_{{answer.correct}}_{{i}}" class="option option1 d-flex justify-content-center align-items-center bebas-neue-regular" (click)="checkAnswer(answer.correct, i, answer.answer)">
-                        <p class="m-0 p-0 optionText">{{ answer.answer | shortNumber}} km²</p>
-                    </div>
-                </div>
-            </ng-container>
             <ng-container *ngIf="randomCategory == 'population' && isGameActive == true">
                 <div
                     class="col-6 p-2 optionHolder"
@@ -76,7 +77,7 @@
                     </div>      
                 </div>
             </ng-container>
-            <ng-container *ngIf="(randomCategory == 'capital' || randomCategory == 'border' || randomCategory == 'region' || randomCategory == 'currency') && isGameActive == true">
+            <ng-container *ngIf="(randomCategory == 'capital' || randomCategory == 'border' || randomCategory == 'region' || randomCategory == 'currency' || randomCategory == 'areaComparison' || randomCategory == 'drivingSide' || randomCategory == 'landlocked' || randomCategory == 'sameRegion' || randomCategory == 'borderingCountry' || randomCategory == 'largerPopulation' || randomCategory == 'largerArea' || randomCategory == 'moreBorders' || randomCategory == 'populationDensity' || randomCategory == 'gdp') && isGameActive == true">
                 <div
                     class="col-6 p-2 optionHolder"
                     *ngFor="let answer of possibleAnswers; let i = index;"

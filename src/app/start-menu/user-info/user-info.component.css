@@ -11,8 +11,9 @@
     border-bottom-right-radius: 16px;
     color: white;
     height: 120px;
+    box-shadow: -10px 25px 35px rgba(43, 42, 42, 0.363);
 }
-/* Medium screens */
+
 @media (max-width: 768px) {
   .responsive-text {
     font-size: 1.4rem;
@@ -25,7 +26,6 @@
   }
 }
 
-/* Small screens */
 @media (max-width: 480px) {
   .responsive-text {
     font-size: 5rem;

@@ -1,0 +1,97 @@
+<div class="game-setup-container">
+  <!-- Header -->
+  <div class="header">
+  <button mat-icon-button (click)="goBack()" class="back-button" title="Go Back">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+  <div style="flex: 1; text-align: center;">
+    <img src="/finalNoBgv2.png" alt="Country Trivia Logo" class="logo" />
+    <h1 class="title">Game Setup</h1>
+  </div>
+  <div style="width: 50px;"></div>
+</div>
+
+
+
+  <!-- Main Content -->
+  <div class="setup-content">
+    <!-- Difficulty Selection -->
+    <div class="setup-section">
+      <h2 class="section-title">Select Difficulty</h2>
+      <div class="cards-grid">
+        <div
+          *ngFor="let difficulty of difficulties"
+          class="card difficulty-card"
+          [class.selected]="selectedDifficulty === difficulty.value"
+          (click)="selectDifficulty(difficulty.value)"
+        >
+          <div class="card-icon">{{ difficulty.icon }}</div>
+          <h3 class="card-title">{{ difficulty.label }}</h3>
+          <p class="card-description">{{ difficulty.description }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Game Mode Selection -->
+    <div class="setup-section">
+      <h2 class="section-title">Select Game Mode</h2>
+      <div class="cards-grid">
+        <div
+          *ngFor="let mode of gameModes"
+          class="card mode-card"
+          [class.selected]="selectedMode === mode.value"
+          (click)="selectMode(mode.value)"
+        >
+          <div class="card-icon">{{ mode.icon }}</div>
+          <h3 class="card-title">{{ mode.label }}</h3>
+          <p class="card-description">{{ mode.description }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Custom Game Options (Only show if Custom is selected) -->
+    <ng-container *ngIf="selectedMode === 'custom'">
+      <!-- Region Selection -->
+      <div class="setup-section">
+        <h2 class="section-title">Select Region</h2>
+        <div class="cards-grid">
+          <div
+            *ngFor="let region of regions"
+            class="card region-card"
+            [class.selected]="selectedRegion === region.value"
+            (click)="selectRegion(region.value)"
+          >
+            <div class="card-icon">{{ region.icon }}</div>
+            <h3 class="card-title">{{ region.label }}</h3>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question Type Selection -->
+      <div class="setup-section">
+        <h2 class="section-title">Question Type</h2>
+        <div class="cards-grid">
+          <div
+            *ngFor="let type of questionTypes"
+            class="card type-card"
+            [class.selected]="selectedType === type.value"
+            (click)="selectType(type.value)"
+          >
+            <div class="card-icon">{{ type.icon }}</div>
+            <h3 class="card-title">{{ type.label }}</h3>
+            <p class="card-description">{{ type.description }}</p>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- Start Game Button -->
+    <button
+      class="start-button"
+      (click)="startGame()"
+      [disabled]="!isFormValid()"
+    >
+      Start Game
+    </button>
+  </div>
+</div>

@@ -49,11 +49,18 @@ export class LeaderboardComponent {
 
   loading = true;
 
+  isEasyScores = true;
+
   async ngOnInit() {
     const currentUser = await this._user.loadUserProfile()
     var rank = 0
     var rankGames = 0
-    var scores = await this._user.getScores()
+    if(this.isEasyScores == true) {
+      var scores = await this._user.getEasyScores()
+    }
+    else {
+      var scores = await this._user.getHardScores()
+    }
     scores.forEach(element => {
       rank++
       element['date'] = this.formatDate(element['date'])
@@ -74,16 +81,27 @@ export class LeaderboardComponent {
         element['rank'] = rank
       }
 
-      if((currentUser.name == element['name']) && (currentUser.highScore == element['score'])) {
+      if((currentUser.name == element['name']) && ((currentUser.easyHighScore == element['score']) || (currentUser.hardHighScore == element['score'])) ) {
         this.userName = currentUser.name
-        this.userScore = currentUser.highScore
-        
-        this.activeUser = {
-          rank: element['rank'],
-          date: element['date'],
-          score: currentUser.highScore,
-          name: currentUser.name
+        if(this.isEasyScores == true) {
+          this.userScore = currentUser.easyHighScore
+          this.activeUser = {
+            rank: element['rank'],
+            date: element['date'],
+            score: currentUser.easyHighScore,
+            name: currentUser.name
+          }
         }
+        else {
+          this.userScore = currentUser.hardHighScore
+          this.activeUser = {
+            rank: element['rank'],
+            date: element['date'],
+            score: currentUser.hardHighScore,
+            name: currentUser.name
+          }
+        }
+        
         this.dataSourceActive.push(this.activeUser)
         this.foundUser = true
       }

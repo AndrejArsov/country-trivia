@@ -8,12 +8,15 @@ import { UserInfoComponent } from "./user-info/user-info.component";
 
 @Component({
   selector: 'app-start-menu',
-  standalone: true,
+  standalone: true, 
   imports: [UserInfoComponent],
   templateUrl: './start-menu.component.html',
   styleUrls: ['./start-menu.component.css', '../../bootstrap.css'],
 })
 export class StartMenuComponent {
+  private lastClickTime = 0;
+  private MIN_CLICK_INTERVAL = 500;
+
   private _router = inject(Router);
   loading = true;
   userProfile: any = null;
@@ -26,9 +29,9 @@ export class StartMenuComponent {
   ) {}
   
   async ngOnInit() {
-    // Wait a bit to let auth state initialize
+    
     setTimeout(async () => {
-      // Load profile
+      
       const profile = await this.userService.loadUserProfile();
 
       if (profile !== undefined && profile !== null) {
@@ -36,7 +39,7 @@ export class StartMenuComponent {
         this.loading = false;
       } else {
         this.loading = false;
-        // Show the name entry dialog
+        
         const dialogRef = this.dialog.open(NameDialogComponent, {
           width: '600px',
           disableClose: true
@@ -55,7 +58,14 @@ export class StartMenuComponent {
   }
 
   startGame() {
-    this._router.navigateByUrl('/game')
+    const now = performance.now();
+    if (now - this.lastClickTime < this.MIN_CLICK_INTERVAL) {
+      console.warn('Too fast click ignored');
+      return;
+    }
+    this.lastClickTime = now;
+  
+    this._router.navigateByUrl('/game-setup')
   }
 
   goToLeaderboard() {
